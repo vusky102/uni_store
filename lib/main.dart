@@ -1,6 +1,9 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:hugeicons/hugeicons.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -72,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     case 0:
       page = GeneratorPage();
       break;
-    case 1:
+    case 5:
       page = FavouritePage();
       break;
     default:
@@ -104,11 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: Text('Home'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedApron),
                         label: Text('Clothes'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedApron),
                         label: Text('Footwear'),
                       ),
                       NavigationRailDestination(
@@ -143,30 +146,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 SafeArea(
                   child: NavigationRail(
                     extended: constraints.maxWidth >= 600,
+                    
                     destinations: [
                       
                       NavigationRailDestination(
-                        icon: Icon(Icons.home),
+                        icon: Icon(HugeIcons.strokeRoundedHome09),
                         label: Text('Home'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedDress01),
                         label: Text('Clothes'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedRunningShoes),
                         label: Text('Footwear'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedHairDryer),
                         label: Text('Dyson'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
+                        icon: Icon(HugeIcons.strokeRoundedMedicineBottle01),
                         label: Text('Health product'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.favorite),
+                        icon: Icon(HugeIcons.strokeRoundedFavourite),
                         label: Text('Favorites'),
                       ),
                     ],
@@ -229,12 +233,12 @@ class GeneratorPage extends StatelessWidget {
     var pair=appState.current;
 
     final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
+    final style = theme.textTheme.displaySmall!.copyWith(
       color: theme.colorScheme.onPrimary,
       fontStyle: FontStyle.normal,
       );
 
-    final style1 = theme.textTheme.displayMedium!.copyWith(
+    final style1 = theme.textTheme.displaySmall!.copyWith(
       color: theme.colorScheme.onSecondary,
       fontStyle: FontStyle.italic,
       );
@@ -254,44 +258,49 @@ class GeneratorPage extends StatelessWidget {
             Card(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(
-                padding: const EdgeInsets.all(50.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Text(
                   "Shopping with Oxana",
                   style: style1),
                 ),
               ),
-            SizedBox(height: 100,),
+            SizedBox(height: 100),
+            
             Card(
+              
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "My personal Insta",
                   style: style),
                 ),
               ),
+            SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Uni_store online Kz",
                   style: style),
                 ),
               ),
+            SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Offline_store Astana",
                   style: style),
                 ),
               ),
+            SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Cook Diary",
                   style: style),
