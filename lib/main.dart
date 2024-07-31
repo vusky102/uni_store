@@ -1,9 +1,15 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import 'package:url_launcher/url_launcher.dart';
 import 'package:hugeicons/hugeicons.dart';
-
+import 'package:namer_app/styles.dart';
+import 'favouritePage.dart';
+import 'homePage.dart';
+import 'clothesPage.dart';
+import 'dysonPage.dart';
+import 'healthPage.dart';
+import 'footWearPage.dart';
+// import 'styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,17 +22,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Uni_Store',
+        title: 'Uni_Store Kz',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 236, 180, 236)),
+          colorScheme: ColorScheme.fromSeed(seedColor: themeColor),
         ),
         home: const MyHomePage(),     
     );
   }
 }
-
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});  
@@ -44,7 +48,19 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 1:
-        page = const GeneratorPage();
+        page = const HomePage();
+        break;
+      case 2:
+        page = ClothesPage();
+        break;
+      case 3:
+        page = const FootWearPage();
+        break;
+      case 4:
+        page = const DysonPage();
+        break;
+      case 5:
+        page = const HealthPage();
         break;
       case 6:
         page = const FavouritePage();
@@ -58,19 +74,20 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Stack(
           children: [
             CircleAvatar(
-                radius: 40, 
+                maxRadius: 30, 
+                minRadius: 20,
                 backgroundImage: AssetImage('assets/logo.jpg'),
               ), 
           ],
         ),
-        label: Text(' ', style: TextStyle(color: Colors.transparent)),
-        // label: Text(
-        //   'Uni_store',
-        //   style: TextStyle(
-        //     fontSize: 16.0,
-        //     fontWeight: FontWeight.bold
-        //   ),
-        //   ),
+        // label: Text(' ', style: TextStyle(color: Colors.transparent)),
+        label: Text(
+          'Uni_store Kz',
+          style: TextStyle(
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold
+          ),
+        ),
       ),
 
       const NavigationRailDestination(
@@ -113,7 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
             if (constraints.maxWidth<450) {
               return Column(
                 children: [
-                  
                   Expanded(child: mainArea),
                   SafeArea(
                     child: NavigationRail(
@@ -123,8 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onDestinationSelected: (value) {
                         setState(() {
                           selectedIndex=value;
-                        });
-                        
+                        });                    
                       },
                     ),
                   ),
@@ -133,7 +148,6 @@ class _MyHomePageState extends State<MyHomePage> {
             } else {
                 return Row(
                   children: [
-                    
                     SafeArea(
                       child: NavigationRail(
                         extended: constraints.maxWidth >= 600,         
@@ -157,219 +171,3 @@ class _MyHomePageState extends State<MyHomePage> {
       );
   }
 }
-
-class FavouritePage extends StatelessWidget {
-  const FavouritePage({super.key});
-  @override
-  Widget build(BuildContext context) {
-      return const Center(
-        child: Text('No favourites yet.'),
-      );
-  }
-}
-
-
-class GeneratorPage extends StatelessWidget {
-  const GeneratorPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-
-
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.onPrimary,
-      fontStyle: FontStyle.normal,
-      );
-
-    final style1 = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.onSecondary,
-      fontStyle: FontStyle.italic,
-      );
-
-    // IconData icon;
-    // if (appState.favourites.contains(pair)) {
-    //   icon = Icons.favorite;
-    // } else {
-    //   icon = Icons.favorite_border;
-    // }
-
-    return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          
-          children: [
-            
-            Card(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "Shopping with Oxana",
-                  style: style1),
-                ),
-              ),
-            const SizedBox(height: 100),
-            
-            Card(
-              
-              color: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "My personal Insta",
-                  style: style),
-                ),
-              ),
-            const SizedBox(height: 20),
-            Card(
-              color: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Uni_store online Kz",
-                  style: style),
-                ),
-              ),
-            const SizedBox(height: 20),
-            Card(
-              color: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Offline_store Astana",
-                  style: style),
-                ),
-              ),
-            const SizedBox(height: 20),
-            Card(
-              color: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Health product",
-                  style: style),
-                ),
-              ),
-            // SizedBox(height: 10,),
-            // Row(
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: [
-            //     ElevatedButton.icon(
-            //       onPressed: () {
-            //         appState.toggleFavourite();
-            //       },
-            //       icon: Icon(icon),
-            //       label: Text('Like'),
-            //     ),
-            //     SizedBox(width: 10),
-
-            //     ElevatedButton(
-            //       onPressed: () {
-            //         appState.getNext();
-            //         print('button pressed!');
-            //       },
-            //       child: Text('Next'),
-            //     ),
-            //   ],
-            // ),
-            
-          ],
-        ),
-      
-    );
-  }
-}
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-      fontStyle: FontStyle.normal,
-      );
-    
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-
-        child: Text(
-          "${pair.first}  ${pair.second}", 
-          style: style,
-          semanticsLabel: "${pair.first}  ${pair.second}",
-        ),
-      ),
-    );
-  }
-}
-
-// class HistoryListView extends StatefulWidget {
-//   const HistoryListView({Key? key}) : super(key: key);
-
-//   @override
-//   State<HistoryListView> createState() => _HistoryListViewState();
-// }
-
-// class _HistoryListViewState extends State<HistoryListView> {
-//   /// Needed so that [MyAppState] can tell [AnimatedList] below to animate
-//   /// new items.
-//   final _key = GlobalKey();
-
-//   /// Used to "fade out" the history items at the top, to suggest continuation.
-//   static const Gradient _maskingGradient = LinearGradient(
-//     // This gradient goes from fully transparent to fully opaque black...
-//     colors: [Colors.transparent, Colors.black],
-//     // ... from the top (transparent) to half (0.5) of the way to the bottom.
-//     stops: [0.0, 0.5],
-//     begin: Alignment.topCenter,
-//     end: Alignment.bottomCenter,
-//   );
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final appState = context.watch<MyAppState>();
-//     appState.historyListKey = _key;
-
-//     return ShaderMask(
-//       shaderCallback: (bounds) => _maskingGradient.createShader(bounds),
-//       // This blend mode takes the opacity of the shader (i.e. our gradient)
-//       // and applies it to the destination (i.e. our animated list).
-//       blendMode: BlendMode.dstIn,
-//       child: AnimatedList(
-//         key: _key,
-//         reverse: true,
-//         padding: EdgeInsets.only(top: 100),
-//         initialItemCount: appState.history.length,
-//         itemBuilder: (context, index, animation) {
-//           final pair = appState.history[index];
-//           return SizeTransition(
-//             sizeFactor: animation,
-//             child: Center(
-//               child: TextButton.icon(
-//                 onPressed: () {
-//                   appState.toggleFavourite();
-//                 },
-//                 icon: appState.favourites.contains(pair)
-//                     ? Icon(Icons.favorite, size: 12)
-//                     : SizedBox(),
-//                 label: Text(
-//                   pair.asLowerCase,
-//                   semanticsLabel: pair.asPascalCase,
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
