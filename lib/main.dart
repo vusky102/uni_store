@@ -1,12 +1,12 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:provider/provider.dart';
+// import 'package:url_launcher/url_launcher.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,223 +14,166 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Namer App',
+        title: 'Uni_Store',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 236, 180, 236)),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 236, 180, 236)),
         ),
-        home: MyHomePage(),
-        
-      ),
+        home: const MyHomePage(),     
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-  var history = <WordPair>[];
-
-  GlobalKey? historyListKey;
-
-  void getNext() {
-    history.insert(0,current);
-    var animatedList = historyListKey?.currentState as AnimatedListState?;
-    animatedList?.insertItem(0);
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favourites = <WordPair>[];
-
-  void toggleFavourite() {
-    if (favourites.contains(current)) {
-      favourites.remove(current);
-    } else {
-      favourites.add(current);
-    }
-    notifyListeners();
-  }
-
-}
 
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});  
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   
-  var selectedIndex=0;
+  var selectedIndex=1;
 
   @override
   Widget build(BuildContext context) {
     
-  Widget page;
-  switch (selectedIndex) {
-    case 0:
-      page = GeneratorPage();
-      break;
-    case 5:
-      page = FavouritePage();
-      break;
-    default:
-      throw UnimplementedError('no widget for $selectedIndex');
-  }
+    Widget page;
+    switch (selectedIndex) {
+      case 1:
+        page = const GeneratorPage();
+        break;
+      case 6:
+        page = const FavouritePage();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
 
-  var mainArea = ColoredBox(
-    color: Theme.of(context).colorScheme.surfaceContainer,
-    child: AnimatedSwitcher(
-      duration: Duration(milliseconds: 200),
-      child:page,
-    ),  
-  );  
-    
-    return Scaffold(
-    body: LayoutBuilder(
-      builder: (context,constraints) {
-        if (constraints.maxWidth<450) {
-          return Column(
-            children: [
-              
-              Expanded(child: mainArea),
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth>=600,
-                  destinations: [
-                    NavigationRailDestination(
-                        icon: Icon(Icons.home),
-                        label: Text('Home'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedApron),
-                        label: Text('Clothes'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedApron),
-                        label: Text('Footwear'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
-                        label: Text('Dyson'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.add_shopping_cart),
-                        label: Text('Health product'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.favorite),
-                        label: Text('Favorites'),
-                      ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex=value;
-                    });
-                    print('seclected: $value');
-                  },
-                ),
-              ),
-              
-            ],
-          
-          );
-        } else {
-            return Row(
-              children: [
-                SafeArea(
-                  child: NavigationRail(
-                    extended: constraints.maxWidth >= 600,
-                    
-                    destinations: [
-                      
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedHome09),
-                        label: Text('Home'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedDress01),
-                        label: Text('Clothes'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedRunningShoes),
-                        label: Text('Footwear'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedHairDryer),
-                        label: Text('Dyson'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedMedicineBottle01),
-                        label: Text('Health product'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(HugeIcons.strokeRoundedFavourite),
-                        label: Text('Favorites'),
-                      ),
-                    ],
-                    selectedIndex: selectedIndex,
-                    onDestinationSelected: (value) {
-                      setState(() {
-                        selectedIndex = value;
-                      });
-                    },
-                  ),
-                ),
-                Expanded(child: mainArea),
-              ],
-            );
-          }
-        },
+    final destinations = [              
+      const NavigationRailDestination(
+        icon: Stack(
+          children: [
+            CircleAvatar(
+                radius: 40, 
+                backgroundImage: AssetImage('assets/logo.jpg'),
+              ), 
+          ],
+        ),
+        label: Text(' ', style: TextStyle(color: Colors.transparent)),
+        // label: Text(
+        //   'Uni_store',
+        //   style: TextStyle(
+        //     fontSize: 16.0,
+        //     fontWeight: FontWeight.bold
+        //   ),
+        //   ),
       ),
-    );
+
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedHome09),
+        label: Text('Home'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedDress01),
+        label: Text('Clothes'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedRunningShoes),
+        label: Text('Footwear'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedHairDryer),
+        label: Text('Dyson'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedMedicineBottle01),
+        label: Text('Health product'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedFavourite),
+        label: Text('Favorites'),
+      ),
+      ];
+
+    var mainArea = ColoredBox(
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        child:page,
+      ),  
+    );  
+      
+      return Scaffold(
+        body: LayoutBuilder(
+          builder: (context,constraints) {
+            if (constraints.maxWidth<450) {
+              return Column(
+                children: [
+                  
+                  Expanded(child: mainArea),
+                  SafeArea(
+                    child: NavigationRail(
+                      extended: constraints.maxWidth>=600,
+                      destinations: destinations,
+                      selectedIndex: selectedIndex,
+                      onDestinationSelected: (value) {
+                        setState(() {
+                          selectedIndex=value;
+                        });
+                        
+                      },
+                    ),
+                  ),
+                ],  
+              );
+            } else {
+                return Row(
+                  children: [
+                    
+                    SafeArea(
+                      child: NavigationRail(
+                        extended: constraints.maxWidth >= 600,         
+                        destinations: destinations,
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected: (value) {
+                          if (value != 0) {
+                            setState(() {
+                              selectedIndex = value;
+                          });
+                          }
+                        },
+                      ),
+                    ),
+                    Expanded(child: mainArea),
+                  ],
+                );
+              }
+          },
+        ),
+      );
   }
 }
 
 class FavouritePage extends StatelessWidget {
+  const FavouritePage({super.key});
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var fav=appState.favourites;
-
-    if (appState.favourites.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No favourites yet.'),
       );
-    }
-
-    return ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-          
-            child: Text('You have ''${fav.length} favourites:'),
-            ),
-            for (var a in fav)
-              ListTile(
-                leading: Icon(Icons.favorite),
-                title: Text(a.asLowerCase),
-              ),
-                
-            
-        ],
-      );
-        
-    
   }
 }
 
 
 class GeneratorPage extends StatelessWidget {
+  const GeneratorPage({super.key});
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair=appState.current;
+
 
     final theme = Theme.of(context);
     final style = theme.textTheme.displaySmall!.copyWith(
@@ -255,6 +198,7 @@ class GeneratorPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           
           children: [
+            
             Card(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(
@@ -264,7 +208,7 @@ class GeneratorPage extends StatelessWidget {
                   style: style1),
                 ),
               ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             
             Card(
               
@@ -276,7 +220,7 @@ class GeneratorPage extends StatelessWidget {
                   style: style),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
@@ -286,7 +230,7 @@ class GeneratorPage extends StatelessWidget {
                   style: style),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
@@ -296,13 +240,13 @@ class GeneratorPage extends StatelessWidget {
                   style: style),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Card(
               color: Theme.of(context).colorScheme.primary,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  "Cook Diary",
+                  "Health product",
                   style: style),
                 ),
               ),
