@@ -13,14 +13,14 @@ class ClothesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text('Clothes Collection'),
+        title: const Text('Clothes Collection'),
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, // Number of columns in the grid
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 4.0,
@@ -32,7 +32,10 @@ class ClothesPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ImageDetailPage(imagePath: images[index]),
+                  builder: (context) => ImageDetailPage(
+                    images: images,
+                    initialIndex: index,
+                  ),
                 ),
               );
             },
@@ -47,26 +50,66 @@ class ClothesPage extends StatelessWidget {
   }
 }
 
-class ImageDetailPage extends StatelessWidget {
-  final String imagePath;
+class ImageDetailPage extends StatefulWidget {
+  final List<String> images;
+  final int initialIndex;
 
-  ImageDetailPage({required this.imagePath});
+  const ImageDetailPage({super.key, required this.images, required this.initialIndex});
+
+  @override
+  _ImageDetailPageState createState() => _ImageDetailPageState();
+}
+
+class _ImageDetailPageState extends State<ImageDetailPage> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Detail'),
+        title: const Text('Image Detail'),
         leading: IconButton(
-          icon: Icon(HugeIcons.strokeRoundedArrowTurnBackward),
+          icon: const Icon(HugeIcons.strokeRoundedArrowTurnBackward),
           onPressed: () {
             Navigator.pop(context); // Go back to the previous page
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(HugeIcons.strokeRoundedFavourite),
+            onPressed: () {
+              // Handle the favorite action
+            },
+          ),
+          IconButton(
+            icon: const Icon(HugeIcons.strokeRoundedShoppingCartAdd01),
+            onPressed: () {
+              // Handle the add to cart action
+            },
+          ),
+        ],
       ),
-      body: Center(
-        child: Image.asset(imagePath),
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: widget.images.length,
+        itemBuilder: (context, index) {
+          return Center(
+            child: Image.asset(widget.images[index]),
+          );
+        },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

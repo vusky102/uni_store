@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import 'package:url_launcher/url_launcher.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:namer_app/styles.dart';
+import 'hugeicons.dart';
+import 'styles.dart';
 import 'favouritePage.dart';
 import 'homePage.dart';
 import 'clothesPage.dart';
 import 'dysonPage.dart';
 import 'healthPage.dart';
 import 'footWearPage.dart';
+import 'checkout_page.dart';
 // import 'styles.dart';
 
 void main() {
@@ -65,6 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 6:
         page = const FavouritePage();
         break;
+      case 7:
+        page = const CheckoutPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -113,6 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
       const NavigationRailDestination(
         icon: Icon(HugeIcons.strokeRoundedFavourite),
         label: Text('Favorites'),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(HugeIcons.strokeRoundedShoppingCartCheckOut01),
+        label: Text('Checkout'),
       ),
       ];
 
